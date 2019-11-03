@@ -6,7 +6,7 @@ import (
 
     "github.com/gin-gonic/gin"
 
-      "github.com/EDDYCJY/go-gin-example/pkg/setting"
+      "github.com/zw8677174/game_site/pkg/setting"
 )
 
 func main() {
@@ -24,6 +24,7 @@ func main() {
         WriteTimeout:   setting.WriteTimeout,
         MaxHeaderBytes: 1 << 20,
     }
+
 
     s.ListenAndServe()
 }
