@@ -1,26 +1,105 @@
-/**
- * Created by sioxa on 2016/12/29 0029.
- */
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Album from './components/Album.vue'
-import Singer from './components/Singer.vue'
-import RankPage from './components/RankPage.vue'
-import Cd from './components/Cd.vue'
+import $ from 'zepto'
 
-Vue.use(VueRouter)
+export default function (router) {
+  router.map({
+    '*': {
+      component (resolve) {
+        require(['./views/welcome'], resolve)
+      }
+    },
+    '/': {
+      component (resolve) {
+        require(['./views/welcome'], resolve)
+      }
+    },
+    '/home': {
+      component (resolve) {
+        require(['./views/home'], resolve)
+      }
+    },
+    '/list': {
+      component (resolve) {
+        require(['./views/list'], resolve)
+      }
+    },
+    '/rank': {
+      component (resolve) {
+        require(['./views/rank'], resolve)
+      }
+    },
+    '/invite': {
+      component (resolve) {
+        require(['./views/invite'], resolve)
+      }
+    },
+    '/tasks': {
+      component (resolve) {
+        require(['./views/tasks'], resolve)
+      }
+    },
+    '/user': {
+      component (resolve) {
+        require(['./views/user'], resolve)
+      }
+    },
+    '/user/tasks': {
+      component (resolve) {
+        require(['./views/user/tasks'], resolve)
+      }
+    },
+    '/user/withdraw': {
+      component (resolve) {
+        require(['./views/user/withdraw'], resolve)
+      }
+    },
+    '/user/profile': {
+      component (resolve) {
+        require(['./views/user/profile'], resolve)
+      }
+    },
+    '/user/profit': {
+      component (resolve) {
+        require(['./views/user/profit'], resolve)
+      }
+    },
+    '/user/profit/record': {
+      component (resolve) {
+        require(['./views/user/profitRecord'], resolve)
+      }
+    },
+    '/more': {
+      component (resolve) {
+        require(['./views/more'], resolve)
+      }
+    },
+    '/more/feedback': {
+      component (resolve) {
+        require(['./views/more/feedback'], resolve)
+      }
+    },
+    '/more/about': {
+      component (resolve) {
+        require(['./views/more/about'], resolve)
+      }
+    }
+  })
 
-const routes = [
-  { path: '/singer/:id',name:'singer', component: Singer },
-  { path: '/album/:id',name:'album',  component: Album },
-  { path: '/rank/:id',name:'rank',  component: RankPage },
-  { path: '/cd/:id',name:'cd',  component: Cd }
-]
+  router.beforeEach(({to, from, next}) => {
+    let toPath = to.path
+    let fromPath = from.path
+    console.log(`to: ${toPath} from: ${fromPath}`)
+    if (toPath.replace(/[^/]/g, '').length > 1) {
+      router.app.isIndex = false
+    }
+    else {
+      let depath = toPath === '/' || toPath === '/invite' || toPath === '/rank'
+      router.app.isIndex = depath ? 0 : 1
+    }
+    next()
+  })
 
-export default new VueRouter({
-  routes,
-  //只在history模式下有用
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
-})
+  router.afterEach(function ({to}) {
+    console.log(`成功浏览到: ${to.path}`)
+    $.refreshScroller()
+  })
+}
