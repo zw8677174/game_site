@@ -2,20 +2,20 @@
   <div class="hello">
     <Header/>
     <el-button>home</el-button>
+    <Footer/>
   </div>
 </template>
 
 <script>
-import Header from '../components/Header.vue'
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'Home',
-   components: {
-    Header
-  },
-  props: {
-    msg: String
-  }
+    name: 'Home',
+    components: {
+        Header,
+        Footer
+    }
 }
 </script>
 

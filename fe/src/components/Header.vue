@@ -1,15 +1,16 @@
 <template>
   <div class="header">
-          <el-button>header</el-button>
+    <Avatar/>
   </div>
 </template>
 
 <script>
+import Avatar from '@/components/Avatar.vue'
 export default {
   name: 'Header',
-  props: {
-    msg: String
-  }
+    components: {
+        Avatar,
+    }
 }
 </script>
 
