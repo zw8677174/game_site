@@ -1,7 +1,7 @@
 package game_service
 
 import (
-	"github.com/EDDYCJY/go-gin-example/models"
+	"rd/models"
 )
 
 type Game struct {
