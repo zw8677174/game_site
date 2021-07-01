@@ -5,10 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	_ "rd/docs"
-	"github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
-
 	"rd/middleware/jwt"
 	"rd/pkg/export"
 	"rd/pkg/qrcode"
@@ -28,7 +24,6 @@ func InitRouter() *gin.Engine {
 	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 
 	r.POST("/auth", api.GetAuth)
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.POST("/upload", api.UploadImage)
 	r.GET("/tags1", v1.GetTags)
 
