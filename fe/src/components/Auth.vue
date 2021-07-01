@@ -20,6 +20,7 @@
 
 <script>
 import api from '@/api/main.js'
+import store from '@/store/store.js'
 
 export default {
     name: 'Auth',
@@ -34,10 +35,12 @@ export default {
     },
     methods: {
         cancel() {
-            console.log('cancel!');
+          this.$router.push({ name: 'Home'})
         },
         onSubmit() {
-          api.auth(this.form);
+          api.auth(this.form, v => {
+            store.setUserInfo(v)
+          });
         },
     }
 }

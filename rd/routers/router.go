@@ -31,7 +31,7 @@ func InitRouter() *gin.Engine {
 	apiv1.Use(jwt.JWT())
 	{
 		// 游戏列表
-		apiv1.GET("/games", v1.GetGameList)
+		apiv1.GET("/game_list", v1.GetGameList)
         //获取标签列表
 		apiv1.GET("/tags", v1.GetTags)
 

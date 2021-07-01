@@ -9,9 +9,14 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import api from '@/api/main.js'
+
 
 export default {
     name: 'Home',
+  mounted() {
+      api.getGameList();
+  },
     components: {
         Header,
         Footer

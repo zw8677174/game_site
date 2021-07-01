@@ -25,10 +25,7 @@ func GetAuth(c *gin.Context) {
 
 	var auth Auth
 
-
 	if c.BindJSON(&auth) == nil {
-		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
-		return
 	}
 
 	ok, _ := valid.Valid(&auth)
