@@ -12,27 +12,26 @@ import (
 	"rd/service/auth_service"
 )
 
-type auth struct {
-	Username string `valid:"Required; MaxSize(50)"`
-	Password string `valid:"Required; MaxSize(50)"`
+type Auth struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
-// @Summary Get Auth
-// @Produce  json
-// @Param username query string true "userName"
-// @Param password query string true "password"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
-// @Router /auth [get]
+
 func GetAuth(c *gin.Context) {
+
 	appG := app.Gin{C: c}
 	valid := validation.Validation{}
 
-	username := c.PostForm("username")
-	password := c.PostForm("password")
+	var auth Auth
 
-	a := auth{Username: username, Password: password}
-	ok, _ := valid.Valid(&a)
+
+	if c.BindJSON(&auth) == nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	ok, _ := valid.Valid(&auth)
 
 	if !ok {
 		app.MarkErrors(valid.Errors)
@@ -40,7 +39,7 @@ func GetAuth(c *gin.Context) {
 		return
 	}
 
-	authService := auth_service.Auth{Username: username, Password: password}
+	authService := auth_service.Auth{Username: auth.Username, Password: auth.Password}
 	isExist, err := authService.Check()
 	if err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
@@ -52,7 +51,7 @@ func GetAuth(c *gin.Context) {
 		return
 	}
 
-	token, err := util.GenerateToken(username, password)
+	token, err := util.GenerateToken(auth.Username, auth.Password)
 	if err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
 		return

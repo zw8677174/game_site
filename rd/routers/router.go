@@ -23,7 +23,7 @@ func InitRouter() *gin.Engine {
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 
-	r.POST("/auth", api.GetAuth)
+	r.POST("/api/auth", api.GetAuth)
 	r.POST("/upload", api.UploadImage)
 	r.GET("/tags1", v1.GetTags)
 
