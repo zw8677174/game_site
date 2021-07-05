@@ -6,8 +6,8 @@ export default {
 
     name: 'api',
     version: 'v1.0',
-    initAuth: function (params) {
-        params['token'] = store.getToken();
+    initParams: function (params) {
+        params.token = store.getToken();
         return params;
     },
 
@@ -16,8 +16,13 @@ export default {
         return axios.post('/api/auth', data).then(v => func(v.data.data));
     },
 
-    getGameList: function(data = [], func) {
-        return axios.get('/api/v1/game_list', this.initAuth(data)).then(v => func(v.data.data));
+    getGameList: function(data = {}, func) {
+        return axios({
+            url: '/api/v1/game_list',
+            method: 'GET',
+            params: this.initParams(data)
+        });
+        // return axios.get('/api/v1/game_list', this.initParams(data)).then(v => func(v.data.data));
     },
 
 

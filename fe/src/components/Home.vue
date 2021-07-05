@@ -15,7 +15,10 @@ import api from '@/api/main.js'
 export default {
     name: 'Home',
   mounted() {
-      api.getGameList();
+      let ret = api.getGameList().then(v => {
+
+      })
+      console.log(ret);
   },
     components: {
         Header,

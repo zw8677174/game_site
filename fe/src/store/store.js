@@ -11,5 +11,4 @@ export default {
     getToken() {
         return this.state.token;
     }
-
 }
