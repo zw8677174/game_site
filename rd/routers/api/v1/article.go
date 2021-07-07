@@ -3,10 +3,10 @@ package v1
 import (
 	"net/http"
 
-	"github.com/unknwon/com"
 	"github.com/astaxie/beego/validation"
 	"github.com/boombuler/barcode/qr"
 	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
 
 	"rd/pkg/app"
 	"rd/pkg/e"
@@ -17,12 +17,6 @@ import (
 	"rd/service/tag_service"
 )
 
-// @Summary Get a single article
-// @Produce  json
-// @Param id path int true "ID"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
-// @Router /api/v1/articles/{id} [get]
 func GetArticle(c *gin.Context) {
 	appG := app.Gin{C: c}
 	id := com.StrTo(c.Param("id")).MustInt()
