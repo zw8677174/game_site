@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <Header/>
-    <el-button>home</el-button>
+    <Game/>
     <Footer/>
   </div>
 </template>
@@ -9,19 +9,17 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import Game from '@/components/Game.vue'
 import api from '@/api/main.js'
 
 
 export default {
     name: 'Home',
   mounted() {
-      let ret = api.getGameList().then(v => {
-
-      })
-      console.log(ret);
   },
     components: {
         Header,
+        Game,
         Footer
     }
 }

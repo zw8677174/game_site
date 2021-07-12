@@ -16,7 +16,7 @@ export default {
         return axios.post('/api/auth', data).then(v => func(v.data.data));
     },
 
-    getGameList: function(data = {}, func) {
+    getGameList: function(data = {}) {
         return axios({
             url: '/api/v1/game_list',
             method: 'GET',

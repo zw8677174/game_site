@@ -12,7 +12,6 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button @click='cancel'>取消</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -39,7 +38,8 @@ export default {
         },
         onSubmit() {
           api.auth(this.form, v => {
-            store.setUserInfo(v)
+              store.setUserInfo(v);
+              this.$router.push('/home');
           });
         },
     }
