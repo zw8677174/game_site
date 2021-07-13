@@ -15,10 +15,10 @@ export default {
       gameList:[]
     };
   },
-    mounted() {
-       api.getGameList().then(v => {
+    async mounted() {
+       await api.getGameList().then(v => {
          console.log(v)
-        this.gameList = v.data.data.lists
+        this.gameList = v.lists
          console.log(this.gameList[0].id)
       });
     }
