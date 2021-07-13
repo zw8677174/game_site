@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <Header/>
-    <Game/>
+    <GameList/>
     <Footer/>
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import Game from '@/components/Game.vue'
+import GameList from '@/components/GameList.vue'
 import api from '@/api/main.js'
 
 
@@ -19,7 +19,7 @@ export default {
   },
     components: {
         Header,
-        Game,
+      GameList,
         Footer
     }
 }
