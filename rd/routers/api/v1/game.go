@@ -1,16 +1,14 @@
 package v1
 
 import (
-	"net/http"
+	"rd/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
 
 	"rd/pkg/app"
-	"rd/pkg/e"
 	"rd/pkg/setting"
 	"rd/pkg/util"
-	"rd/service/game_service"
 )
 
 
@@ -22,19 +20,11 @@ func GetGameList(c *gin.Context) {
 		state = com.StrTo(arg).MustInt()
 	}
 
-	gameService := game_service.Game{
+	gameService := service.GameService{
 		Name:     name,
 		State:    state,
 		PageNum:  util.GetPage(c),
 		PageSize: setting.AppSetting.PageSize,
 	}
-	tags, err := gameService.GetList()
-	if err != nil {
-		appG.Response(http.StatusInternalServerError, e.ERROR_GET_TAGS_FAIL, nil)
-		return
-	}
 
-	appG.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
-		"lists": tags,
-	})
 }
