@@ -19,7 +19,6 @@ func init() {
 	setting.Setup()
 	models.Setup()
 	logging.Setup()
-	// gredis.Setup()
 	util.Setup()
 }
 

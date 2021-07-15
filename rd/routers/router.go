@@ -29,7 +29,8 @@ func InitRouter() *gin.Engine {
 	apiv1.Use(jwt.JWT())
 	{
 		// 游戏列表
-		apiv1.GET("/game_list", service.GameService.GetList)
+		apiv1.GET("/game_list", new(service.GameService).GetList)
+
 	}
 
 	return r
