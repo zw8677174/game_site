@@ -25,7 +25,7 @@ func (t *GameService) GetList(c *gin.Context) () {
 		Games []models.Game
 	)
 
-	Games, err := models.GetList(t.PageNum, t.PageSize, t.getConds())
+	Games, err := new(models.Game).GetList(t.PageNum, t.PageSize, t.getListConds())
 	if err != nil {
 	}
 
@@ -35,7 +35,7 @@ func (t *GameService) GetList(c *gin.Context) () {
 
 }
 
-func (t *GameService) getConds() map[string]interface{} {
+func (t *GameService) getListConds() map[string]interface{} {
 	maps := make(map[string]interface{})
 	maps["is_del"] = 0
 
