@@ -14,7 +14,7 @@ type Game struct {
 }
 
 
-func (t *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, error) {
+func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, error) {
 	var (
 		games []Game
 		err  error
@@ -33,8 +33,8 @@ func (t *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, err
 	return games, nil
 }
 
-func (t *Game) create(game Game) error {
-	 err := db.Create(&game).Error
+func (g *Game) Create() error {
+	 err := db.Create(&g).Error
 	 if err != nil {
 		return err
 	}

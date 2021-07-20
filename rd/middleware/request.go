@@ -1,4 +1,4 @@
-package jwt
+package request
 
 import (
 	"net/http"
@@ -10,8 +10,23 @@ import (
 	"rd/pkg/util"
 )
 
+type InputMap map[string]interface{}
+
+type PageInfo struct {
+	PageNum  int
+	PageSize int
+}
+
+func GetBaseInfo() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set("pageInfo", c.ShouldBindQuery(new(PageInfo)))
+		c.Set("body", c.ShouldBindJSON(new(InputMap)))
+		c.Set("query", c.ShouldBindQuery(new(InputMap)))
+	}
+}
+
 // JWT is jwt middleware
-func JWT() gin.HandlerFunc {
+func GetParam() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var code int
 		var data interface{}
@@ -37,7 +52,6 @@ func JWT() gin.HandlerFunc {
 					c.Set("uid", claims.Uid)
 				}
 			}
-
 
 		}
 

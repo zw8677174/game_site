@@ -25,11 +25,17 @@ func InitRouter() *gin.Engine {
 	r.POST("/api/auth", api.GetAuth)
 	r.POST("/upload", api.UploadImage)
 
-	apiv1 := r.Group("/api/v1")
-	apiv1.Use(jwt.JWT())
+	apiFont := r.Group("/api/font")
+	apiFont.Use(jwt.JWT())
 	{
-		// 游戏列表
-		apiv1.GET("/game_list", new(service.GameService).GetList)
+		apiFont.GET("/game_list", new(service.GameService).GetList)
+	}
+
+	apiBackend := r.Group("/api/bd")
+	apiBackend.Use(jwt.JWT())
+	{
+		apiBackend.GET("/game_list", new(service.GameService).GetAuthorList)
+		apiBackend.GET("/game_create", new(service.GameService).Create)
 
 	}
 
