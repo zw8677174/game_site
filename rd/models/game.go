@@ -10,7 +10,7 @@ type Game struct {
 	Name       string `json:"name"`
 	CreatedBy  string `json:"created_time"`
 	ModifiedBy string `json:"modified_time"`
-	AuthorId  string `json:"author_id"`
+	AuthorId  int64 `json:"author_id"`
 }
 
 
@@ -33,14 +33,10 @@ func (t *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, err
 	return games, nil
 }
 
-func (t *Game) create(name string) error {
-
-		game := Game{
-		     Name: name,
-	     }
-		if err := db.Create(&game).Error; err != nil {
+func (t *Game) create(game Game) error {
+	 err := db.Create(&game).Error
+	 if err != nil {
 		return err
-
 	}
 	return nil
 }
