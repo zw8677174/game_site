@@ -2,11 +2,9 @@ package service
 
 import "C"
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"rd/models"
-	"rd/pkg/app"
-	"rd/pkg/e"
 )
 
 type GameService struct {
@@ -14,51 +12,35 @@ type GameService struct {
 }
 
 func (t *GameService) GetList(c *gin.Context) () {
-	appG := app.Gin{C: c}
-
-	var (
-		Games []models.Game
-	)
-
 	Games, err := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), t.getCommonConds())
 	if err != nil {
 	}
-
-	appG.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
-		"lists": Games,
-	})
-
+	t.Success(Games)
 }
 
 func (t *GameService) GetAuthorList(c *gin.Context) () {
 
 	conds := t.getCommonConds()
 	conds["author_id"] = c.GetInt64("uid")
-	Games, err := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), conds)
-
-	if err != nil {
-	}
-
+	Games, _ := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), conds)
 	t.Success(Games)
-
 }
 
 func (t *GameService) Create(c *gin.Context) () {
 	inputMap := c.GetStringMap("json")
-	game := models.Game{
-		Name:     inputMap["name"].(string),
-		AuthorId: c.GetInt64("uid"),
-	}
-	err := game.Create
+	fmt.Print(inputMap)
+	fmt.Print("*****")
 
-	if err != nil {
-	}
-	t.Success(nil)
-
+	//game := models.Game{
+	//	Name:     inputMap["name"].(string),
+	//	AuthorId: c.GetInt64("uid"),
+	//}
+	//game.Create()
+	//t.Success(nil)
 }
 
 func (t *GameService) getCommonConds() map[string]interface{} {
-	maps := make(map[string]interface{})
-	maps["is_del"] = 0
-	return maps
+	conds := make(map[string]interface{})
+	conds["is_del"] = 0
+	return conds
 }

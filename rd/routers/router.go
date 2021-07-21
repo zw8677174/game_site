@@ -35,8 +35,7 @@ func InitRouter() *gin.Engine {
 	apiBackend.Use(jwt.JWT())
 	{
 		apiBackend.GET("/game_list", new(service.GameService).GetAuthorList)
-		apiBackend.GET("/game_create", new(service.GameService).Create)
-
+		apiBackend.POST("/game_create", new(service.GameService).Create)
 	}
 
 	return r

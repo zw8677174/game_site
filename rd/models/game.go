@@ -27,16 +27,13 @@ func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, err
 	}
 
 	if err != nil && err != gorm.ErrRecordNotFound {
+
 		return nil, err
 	}
 
 	return games, nil
 }
 
-func (g *Game) Create() error {
-	 err := db.Create(&g).Error
-	 if err != nil {
-		return err
-	}
-	return nil
+func (g *Game) Create()  {
+	db.Create(&g)
 }

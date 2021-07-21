@@ -32,9 +32,7 @@ func main() {
 	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.HttpPort)
 	maxHeaderBytes := 1 << 20
 
-	log.Printf("[info] start http server listening %s", endPoint)
-
-
+	//log.Printf("[info] start http server listening %s", endPoint)
 	//server := &http.Server{
 	//	Addr:           endPoint,
 	//	Handler:        routersInit,
