@@ -18,25 +18,25 @@ func (t *GameService) GetList(c *gin.Context) () {
 	t.Success(Games)
 }
 
-func (t *GameService) GetAuthorList(c *gin.Context) () {
+func (s *GameService) GetAuthorList(c *gin.Context) () {
 
-	conds := t.getCommonConds()
+	conds := s.getCommonConds()
 	conds["author_id"] = c.GetInt64("uid")
 	Games, _ := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), conds)
-	t.Success(Games)
+	s.Success(Games)
 }
 
 func (t *GameService) Create(c *gin.Context) () {
-	inputMap := c.GetStringMap("json")
-	fmt.Print(inputMap)
-	fmt.Print("*****")
+	input := t.Form(c)
 
-	//game := models.Game{
-	//	Name:     inputMap["name"].(string),
-	//	AuthorId: c.GetInt64("uid"),
-	//}
-	//game.Create()
-	//t.Success(nil)
+	fmt.Print(input)
+	game := models.Game{
+		Name: input["name"].(string),
+		AuthorId: c.GetInt64("uid"),
+	}
+	game.Create()
+	t.Success(nil)
+	return
 }
 
 func (t *GameService) getCommonConds() map[string]interface{} {
