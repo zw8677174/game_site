@@ -1,10 +1,10 @@
 package service
 
-import "C"
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"rd/models"
+	"rd/pkg/app"
 )
 
 type GameService struct {
@@ -19,15 +19,14 @@ func (t *GameService) GetList(c *gin.Context) () {
 }
 
 func (s *GameService) GetAuthorList(c *gin.Context) () {
-
 	conds := s.getCommonConds()
 	conds["author_id"] = c.GetInt64("uid")
 	Games, _ := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), conds)
 	s.Success(Games)
 }
 
-func (t *GameService) Create(c *gin.Context) () {
-	input := t.Form(c)
+func (gameServer *GameService) Create(c *gin.Context) () {
+	input := gameServer.Form(c)
 
 	fmt.Print(input)
 	game := models.Game{
@@ -35,7 +34,17 @@ func (t *GameService) Create(c *gin.Context) () {
 		AuthorId: c.GetInt64("uid"),
 	}
 	game.Create()
-	t.Success(nil)
+
+	//c.JSON(200, app.ResponseData{
+	//	Code: 200,
+	//	Data: nil,
+	//})
+	newC := new(gin.Context)
+	newC.JSON(200,app.ResponseData{
+		Code: 200,
+		Data: nil,
+	})
+	gameServer.Success(nil)
 	return
 }
 

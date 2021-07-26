@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"rd/service"
 
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,6 @@ import (
 	"rd/pkg/app"
 	"rd/pkg/e"
 	"rd/pkg/util"
-	"rd/service/auth_service"
 )
 
 type Auth struct {
@@ -20,7 +20,6 @@ type Auth struct {
 
 func GetAuth(c *gin.Context) {
 
-	appG := app.Gin{C: c}
 	valid := validation.Validation{}
 
 	var auth Auth
@@ -32,29 +31,25 @@ func GetAuth(c *gin.Context) {
 
 	if !ok {
 		app.MarkErrors(valid.Errors)
-		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		app.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
 		return
 	}
 
-	authService := auth_service.Auth{Username: auth.Username, Password: auth.Password}
-	uid, err := authService.Check()
-	if err != nil {
-		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
-		return
-	}
+	authService := service.AuthService{Username: auth.Username, Password: auth.Password}
+	uid := authService.GetUid(c)
 
 	if uid == 0 {
-		appG.Response(http.StatusUnauthorized, e.ERROR_AUTH, nil)
+		app.Response(http.StatusUnauthorized, e.ERROR_AUTH, nil)
 		return
 	}
 
 	token, err := util.GenerateToken(uid)
 	if err != nil {
-		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
+		app.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
 		return
 	}
 
-	appG.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
+	app.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
 		"token": token,
 		"uid": uid,
 	})

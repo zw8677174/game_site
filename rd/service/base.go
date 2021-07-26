@@ -14,9 +14,7 @@ type BaseService struct {
 }
 
 func (t *BaseService) Success(data interface{}) () {
-	c := new(gin.Context)
-	appG := app.Gin{C: c}
-	appG.Response(http.StatusOK, e.SUCCESS, data)
+	app.Response(http.StatusOK, e.SUCCESS, data)
 	return
 }
 

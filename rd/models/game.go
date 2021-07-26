@@ -36,4 +36,5 @@ func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, err
 
 func (g *Game) Create()  {
 	db.Create(&g)
+
 }

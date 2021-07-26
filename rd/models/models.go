@@ -15,7 +15,9 @@ var db *gorm.DB
 
 type Model struct {
 	ID         int `gorm:"primary_key" json:"id"`
-	Name       int `json:"name"`
+	CreatedOn  int `json:"created_on"`
+	ModifiedOn int `json:"modified_on"`
+	DeletedOn  int `json:"deleted_on"`
 }
 
 // Setup initializes the database instance
