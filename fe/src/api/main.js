@@ -1,8 +1,8 @@
 const axios = require('axios');
 
-axios.interceptors.response.use((response) => {
-    return response.data.data;
-})
+// axios.interceptors.response.use((response) => {
+//     return response.data.data;
+// })
 
 import store from "@/store/store.js"
 

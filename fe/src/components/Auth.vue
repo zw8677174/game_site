@@ -26,8 +26,8 @@ export default {
     data() {
         return {
             form: {
-                username: '',
-                password: '',
+                username: 'zw',
+                password: '123',
                 isForever: ''
             }
         }
@@ -39,7 +39,7 @@ export default {
         onSubmit() {
           api.auth(this.form, v => {
               store.setUserInfo(v);
-              this.$router.push('/home');
+            this.$router.push('/home');
           });
         },
     }
