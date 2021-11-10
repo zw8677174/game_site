@@ -31,7 +31,7 @@ func GetAuth(c *gin.Context) {
 
 	if !ok {
 		app.MarkErrors(valid.Errors)
-		app.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		app.Response(c, http.StatusBadRequest, e.INVALID_PARAMS, nil)
 		return
 	}
 
@@ -39,17 +39,17 @@ func GetAuth(c *gin.Context) {
 	uid := authService.GetUid(c)
 
 	if uid == 0 {
-		app.Response(http.StatusUnauthorized, e.ERROR_AUTH, nil)
+		app.Response(c, http.StatusUnauthorized, e.ERROR_AUTH, nil)
 		return
 	}
 
 	token, err := util.GenerateToken(uid)
 	if err != nil {
-		app.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
+		app.Response(c, http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
 		return
 	}
 
-	app.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
+	app.Response(c, http.StatusOK, e.SUCCESS, map[string]interface{}{
 		"token": token,
 		"uid": uid,
 	})

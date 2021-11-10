@@ -11,7 +11,7 @@ type ResponseData struct {
 	Data interface{} `json:"data"`
 }
 
-func (g *gin.Context) Response(httpCode, errCode int, data interface{}) {
+func Response(g *gin.Context, httpCode int, errCode int, data interface{}) {
 	g.JSON(httpCode, ResponseData{
 		Code: errCode,
 		Msg:  e.GetMsg(errCode),
@@ -19,3 +19,4 @@ func (g *gin.Context) Response(httpCode, errCode int, data interface{}) {
 	})
 	return
 }
+
