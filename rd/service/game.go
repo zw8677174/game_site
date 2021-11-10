@@ -12,17 +12,18 @@ type GameService struct {
 }
 
 func (t *GameService) GetList(c *gin.Context) () {
-	Games, err := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), t.getCommonConds())
-	if err != nil {
-	}
-	t.Success(Games)
+	pageParams := t.getPageParams(c)
+
+	Games := new(models.Game).GetList(pageParams.pageNo, pageParams.pageNum, t.getCommonConds())
+
+	t.Success(c, Games)
 }
 
 func (s *GameService) GetAuthorList(c *gin.Context) () {
 	conds := s.getCommonConds()
 	conds["author_id"] = c.GetInt64("uid")
-	Games, _ := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), conds)
-	s.Success(Games)
+	//Games, _ := new(models.Game).GetList(c.GetStringMap("pageInfo")["pageNo"].(int), c.GetStringMap("pageInfo")["pageInfo"].(int), conds)
+	//s.Success(c, Games)
 }
 
 func (gameServer *GameService) Create(c *gin.Context) () {
@@ -44,7 +45,7 @@ func (gameServer *GameService) Create(c *gin.Context) () {
 		Code: 200,
 		Data: nil,
 	})
-	gameServer.Success(nil)
+	gameServer.Success(c,nil)
 	return
 }
 

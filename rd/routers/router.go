@@ -25,7 +25,7 @@ func InitRouter() *gin.Engine {
 	r.POST("/api/auth", api.GetAuth)
 	r.POST("/upload", api.UploadImage)
 
-	apiFont := r.Group("/api/font")
+	apiFont := r.Group("/api/front")
 	apiFont.Use(jwt.JWT())
 	{
 		apiFont.GET("/game_list", new(service.GameService).GetList)

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"rd/service"
 
@@ -26,6 +27,8 @@ func GetAuth(c *gin.Context) {
 
 	if c.BindJSON(&auth) == nil {
 	}
+
+	fmt.Print(auth)
 
 	ok, _ := valid.Valid(&auth)
 

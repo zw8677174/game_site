@@ -14,7 +14,7 @@ type Game struct {
 }
 
 
-func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, error) {
+func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game) {
 	var (
 		games []Game
 		err  error
@@ -28,10 +28,10 @@ func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game, err
 
 	if err != nil && err != gorm.ErrRecordNotFound {
 
-		return nil, err
+		return nil
 	}
 
-	return games, nil
+	return games
 }
 
 func (g *Game) Create()  {

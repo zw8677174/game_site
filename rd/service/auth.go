@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"rd/models"
 )
@@ -11,6 +12,11 @@ type AuthService struct {
 }
 
 func (a *AuthService) GetUid(c *gin.Context)  int64 {
-	user := new(models.User).Get(c.GetStringMap("pageInfo")["pageNo"].(int))
-	return user.Uid
+	conds := make(map[string]interface{})
+	conds["username"] = a.Username
+	conds["password"] = a.Password
+	user := new(models.User).GetOne(conds)
+	fmt.Print(user)
+	return int64(1)
+	//return user.Uid
 }
