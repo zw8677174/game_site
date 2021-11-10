@@ -13,8 +13,12 @@ type GameService struct {
 
 func (t *GameService) GetList(c *gin.Context) () {
 	pageParams := t.getPageParams(c)
-
-	Games := new(models.Game).GetList(pageParams.pageNo, pageParams.pageNum, t.getCommonConds())
+	conds := t.getCommonConds()
+	name := t.getQueryString(c, "name")
+	if name != "" {
+		conds["name"] = name
+	}
+	Games := new(models.Game).GetList(pageParams.pageNo, pageParams.pageNum, conds)
 
 	t.Success(c, Games)
 }
@@ -47,10 +51,4 @@ func (gameServer *GameService) Create(c *gin.Context) () {
 	})
 	gameServer.Success(c,nil)
 	return
-}
-
-func (t *GameService) getCommonConds() map[string]interface{} {
-	conds := make(map[string]interface{})
-	conds["is_del"] = 0
-	return conds
 }

@@ -16,8 +16,6 @@ type PageParam struct {
 	pageNum int
 }
 
-
-
 type BaseService struct {
 }
 
@@ -44,5 +42,21 @@ func (t *BaseService)getPageParams(ctx *gin.Context ) PageParam {
 	return pageParam
 }
 
+func (t *BaseService) getCommonConds() map[string]interface{} {
+	conds := make(map[string]interface{})
+	conds["is_del"] = 0
+	return conds
+}
+
+func (t *BaseService) getQueryString(ctx *gin.Context, key string) string{
+	queryString, _ := ctx.GetQuery(key)
+	return queryString
+}
+
+func (t *BaseService) getQueryInt(ctx *gin.Context,key string ) int {
+	queryString, _ := ctx.GetQuery(key)
+	queryInt, _ :=  strconv.Atoi(queryString)
+	return queryInt
+}
 
 
