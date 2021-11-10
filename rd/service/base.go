@@ -30,7 +30,7 @@ func (t *BaseService) Failed(c *gin.Context,data interface{}) () {
 }
 
 
-func (t *BaseService)Form(ctx *gin.Context ) Map {
+func (t *BaseService) getFormMap(ctx *gin.Context ) Map {
 	var form Map
 	err2 := ctx.ShouldBindJSON(&form)
 	if err2 ==nil {

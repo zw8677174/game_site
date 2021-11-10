@@ -6,7 +6,6 @@ import (
 
 type Game struct {
 	Model
-
 	Name       string `json:"name"`
 	CreatedBy  string `json:"created_time"`
 	ModifiedBy string `json:"modified_time"`
@@ -36,5 +35,4 @@ func (g *Game) GetList(pageNum int, pageSize int, maps interface{}) ([]Game) {
 
 func (g *Game) Create()  {
 	db.Create(&g)
-
 }

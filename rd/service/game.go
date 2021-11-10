@@ -31,7 +31,7 @@ func (s *GameService) GetAuthorList(c *gin.Context) () {
 }
 
 func (gameServer *GameService) Create(c *gin.Context) () {
-	input := gameServer.Form(c)
+	input := gameServer.getFormMap(c)
 
 	fmt.Print(input)
 	game := models.Game{
@@ -40,10 +40,6 @@ func (gameServer *GameService) Create(c *gin.Context) () {
 	}
 	game.Create()
 
-	//c.JSON(200, app.ResponseData{
-	//	Code: 200,
-	//	Data: nil,
-	//})
 	newC := new(gin.Context)
 	newC.JSON(200,app.ResponseData{
 		Code: 200,
