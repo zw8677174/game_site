@@ -4,19 +4,28 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"rd/models"
+	"rd/pkg/util"
 )
 
 type AuthService struct {
-	Username string
-	Password string
+	BaseService
 }
 
-func (a *AuthService) GetUid(c *gin.Context)  int64 {
-	conds := make(map[string]interface{})
-	conds["username"] = a.Username
-	conds["password"] = a.Password
-	user := new(models.User).GetOne(conds)
+func (a *AuthService) Auth (c *gin.Context)  {
+	conds := a.getCommonConds()
+	conds["username"] = a.getFormString(c, "username")
+	conds["password"] = a.getFormString(c, "password")
+
+	user := new(models.Auth).GetOne(conds)
 	fmt.Print(user)
-	return int64(1)
-	//return user.Uid
+
+	if user == nil {
+		a.Failed(c, nil)
+		return
+	}
+	ret := make(map[string]interface{})
+	ret["token"], _ = util.GenerateToken(int64(user.ID))
+	ret["nickName"] = user.NickName
+	a.Success(c, ret)
+	return
 }

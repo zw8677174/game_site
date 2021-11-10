@@ -2,14 +2,9 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"rd/service"
 
 	"rd/middleware/jwt"
-	"rd/pkg/export"
-	"rd/pkg/qrcode"
-	"rd/pkg/upload"
-	"rd/routers/api"
 )
 
 // InitRouter initialize routing information
@@ -18,12 +13,7 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
-	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
-	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
-
-	r.POST("/api/auth", api.GetAuth)
-	r.POST("/upload", api.UploadImage)
+	r.POST("/api/auth", new(service.AuthService).Auth)
 
 	apiFont := r.Group("/api/front")
 	apiFont.Use(jwt.JWT())

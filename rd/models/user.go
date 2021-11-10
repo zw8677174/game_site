@@ -1,13 +1,13 @@
 package models
 
-type User struct {
+type Auth struct {
 	Model
-	Uid    int64 `json:"uid"`
-	Name     string `json:"name"`
+	UserName string `gorm:"column:username" json:"UserName"`
 	Password string `json:"password"`
+	NickName string `gorm:"column:nick_name" json:"NickName"`
 }
 
-func (u *User) GetOne(maps interface{}) *User {
+func (u *Auth) GetOne(maps interface{}) *Auth {
 	db.Where(maps).Last(u)
 	return u
 }

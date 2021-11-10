@@ -24,6 +24,12 @@ func (t *BaseService) Success(c *gin.Context,data interface{}) () {
 	return
 }
 
+func (t *BaseService) Failed(c *gin.Context,data interface{}) () {
+	app.Response(c, http.StatusOK, e.ERROR, data)
+	return
+}
+
+
 func (t *BaseService)Form(ctx *gin.Context ) Map {
 	var form Map
 	err2 := ctx.ShouldBindJSON(&form)
@@ -59,4 +65,14 @@ func (t *BaseService) getQueryInt(ctx *gin.Context,key string ) int {
 	return queryInt
 }
 
+func (t *BaseService) getFormInt(ctx *gin.Context,key string ) int {
+	formString, _ := ctx.GetPostForm(key)
+	formInt, _ :=  strconv.Atoi(formString)
+	return formInt
+}
+
+func (t *BaseService) getFormString(ctx *gin.Context,key string ) string {
+	formString, _ := ctx.GetPostForm(key)
+	return formString
+}
 

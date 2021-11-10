@@ -31,7 +31,6 @@ func GenerateToken(uid int64) (string, error) {
 	return token, err
 }
 
-// ParseToken parsing token
 func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecret, nil
